@@ -16,20 +16,20 @@ sudo apt-get install -y python3-pip python3-venv
 
 echo ""
 echo "Step 2: Creating installation directory..."
-mkdir -p "$INSTALL_DIR"
+sudo mkdir -p "$INSTALL_DIR"
 
 echo ""
 echo "Step 3: Creating Python virtual environment..."
-python3 -m venv "$INSTALL_DIR/venv"
+sudo python3 -m venv "$INSTALL_DIR/venv"
 
 echo ""
 echo "Step 4: Installing Python packages..."
-"$INSTALL_DIR/venv/bin/pip" install --upgrade pip
-"$INSTALL_DIR/venv/bin/pip" install -r "$SCRIPT_DIR/requirements.txt"
+sudo "$INSTALL_DIR/venv/bin/pip" install --upgrade pip
+sudo "$INSTALL_DIR/venv/bin/pip" install -r "$SCRIPT_DIR/requirements.txt"
 
 echo ""
 echo "Step 5: Copying files..."
-cp "$SCRIPT_DIR/sensor.py" "$INSTALL_DIR/"
+sudo cp "$SCRIPT_DIR/sensor.py" "$INSTALL_DIR/"
 
 echo ""
 echo "Step 6: Setting up systemd service..."
