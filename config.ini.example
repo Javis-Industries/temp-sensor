@@ -1,0 +1,20 @@
+[sensor]
+# Location identifier for this sensor
+location = server_room
+
+# GPIO pin for DHT22 data (BCM numbering)
+pin = D18
+
+# Seconds between sensor readings
+read_interval = 30
+
+[prometheus]
+# Port for exposing Prometheus metrics
+prometheus_port = 9100
+
+[logging]
+# Log file location
+log_file = /home/pi/tempSensor/app.log_file
+
+# Log level (DEBUG, INFO, WARNING, ERROR)
+log_level = INFO
