@@ -27,7 +27,7 @@ SENSOR_LOCATION = config['sensor']['location']
 SENSOR_PIN = getattr(board, config['sensor']['pin'])
 READ_INTERVAL = 30 # Seconds
 PROMETHEUS_PORT = 9100
-LOG_FILE = config['logging']['log_level']
+LOG_FILE = config['logging']['log_file']
 LOG_LEVEL = getattr(logging, config['logging']['log_level'])
 
 # Ensure log directory exists
