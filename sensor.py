@@ -88,15 +88,13 @@ while True:
         humidity = dht_device.humidity
 
         # Validate temperature reading
-        if temp_c is None {
+        if temp_c is None:
             logging.warning("Received None value for temperature")
-        } else {
+        else:
             temp_f = temp_c * (9 / 5) + 32
-        }
 
-        if humidity is None {
+        if humidity is None:
             logging.warning("Received None value for humidity")
-        }
 
         # Update Prometheus metrics
         temp_c.labels(
