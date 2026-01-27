@@ -44,9 +44,9 @@ if log_dir:  # Only create directory if path includes one
     os.makedirs(log_dir, exist_ok=True)
 
 # Prometheus metrics
-temp_c_gauge = Gauge('temp_c', 'Temperate in Celcius', ['location', 'sensor_type', 'hostname'])
-temp_f_gauge = Gauge('temp_f', 'Temperature in Fahrenheiht', ['location', 'sensor_type', 'hostname'])
-humidity_gauge = Gauge('humidity_pct', 'Humidiity Percentage', ['location', 'sensor_type', 'hostname'])
+temp_c_gauge = Gauge('temp_c', 'Temperature in Celsius', ['location', 'sensor_type', 'hostname'])
+temp_f_gauge = Gauge('temp_f', 'Temperature in Fahrenheit', ['location', 'sensor_type', 'hostname'])
+humidity_gauge = Gauge('humidity_pct', 'Humidity Percentage', ['location', 'sensor_type', 'hostname'])
 sensor_info = Info('sensor', 'Sensor information')
 
 # Sensor health metrics
