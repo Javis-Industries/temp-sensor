@@ -152,6 +152,6 @@ while True:
 
     time.sleep(READ_INTERVAL)
 
-    # Cleanup
-    logging.info("Shutting down")
-    dht_device.exit()
+# Cleanup
+logging.info("Shutting down")
+dht_device.exit()
