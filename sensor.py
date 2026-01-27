@@ -25,8 +25,8 @@ config.read(config_path)
 # Configuration
 SENSOR_LOCATION = config['sensor']['location']
 SENSOR_PIN = getattr(board, config['sensor']['pin'])
-READ_INTERVAL = 30 # Seconds
-PROMETHEUS_PORT = 9100
+READ_INTERVAL = config.getint('sensor', 'read_interval')
+PROMETHEUS_PORT = config.getint('prometheus', 'port')
 
 # Make log file path absolute if it's relative
 log_file_config = config['logging']['log_file']
