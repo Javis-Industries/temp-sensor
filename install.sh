@@ -40,7 +40,7 @@ echo "Step 6: Setting up systemd service..."
 # Update service file with correct venv path
 sed -e "s|{{USER}}|$USER|g" \
     -e "s|{{INSTALL_DIR}}|$INSTALL_DIR|g" \
-    "$SOURCE_DIR/systemd/temp-sensor.service" | \
+    "$INSTALL_DIR/systemd/temp-sensor.service" | \
     sudo tee /etc/systemd/system/temp-sensor.service > /dev/null
 
 sudo systemctl daemon-reload
