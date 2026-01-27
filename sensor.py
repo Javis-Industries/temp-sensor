@@ -17,7 +17,7 @@ config_path = os.path.join(os.path.dirname(__file__), 'config.ini')
 
 if not os.path.exists(config_path):
     print(f"ERROR: config.ini not found at {config_path}")
-    print("Copy config.ini.example to config.ini and update with your settings")
+    print("Copy config.ini.template to config.ini and update with your settings")
     sys.exit(1)
 
 config.read(config_path)
@@ -27,11 +27,21 @@ SENSOR_LOCATION = config['sensor']['location']
 SENSOR_PIN = getattr(board, config['sensor']['pin'])
 READ_INTERVAL = 30 # Seconds
 PROMETHEUS_PORT = 9100
-LOG_FILE = config['logging']['log_file']
+
+# Make log file path absolute if it's relative
+log_file_config = config['logging']['log_file']
+if not os.path.isabs(log_file_config):
+    # If relative path, make it relative to the script directory
+    LOG_FILE = os.path.join(os.path.dirname(__file__), log_file_config)
+else:
+    LOG_FILE = log_file_config
+
 LOG_LEVEL = getattr(logging, config['logging']['log_level'])
 
-# Ensure log directory exists
-os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
+# Ensure log directory exists (only if path contains a directory)
+log_dir = os.path.dirname(LOG_FILE)
+if log_dir:  # Only create directory if path includes one
+    os.makedirs(log_dir, exist_ok=True)
 
 # Prometheus metrics
 temp_c_gauge = Gauge('temp_c', 'Temperate in Celcius', ['location', 'sensor_type', 'hostname'])

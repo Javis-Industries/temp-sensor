@@ -7,7 +7,7 @@ echo "====================================="
 
 # Get the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-INSTALL_DIR="/home/pi/temp_sensor"
+INSTALL_DIR="$HOME/temp-sensor"
 
 echo ""
 echo "Step 1: Installing system dependencies..."
@@ -16,25 +16,29 @@ sudo apt-get install -y python3-pip python3-venv
 
 echo ""
 echo "Step 2: Creating installation directory..."
-sudo mkdir -p "$INSTALL_DIR"
+mkdir -p "$INSTALL_DIR"
 
 echo ""
 echo "Step 3: Creating Python virtual environment..."
-sudo python3 -m venv "$INSTALL_DIR/venv"
+python3 -m venv "$INSTALL_DIR/venv"
 
 echo ""
 echo "Step 4: Installing Python packages..."
-sudo "$INSTALL_DIR/venv/bin/pip" install --upgrade pip
-sudo "$INSTALL_DIR/venv/bin/pip" install -r "$SCRIPT_DIR/requirements.txt"
+"$INSTALL_DIR/venv/bin/pip" install --upgrade pip
+"$INSTALL_DIR/venv/bin/pip" install -r "$SCRIPT_DIR/requirements.txt"
 
 echo ""
 echo "Step 5: Copying files..."
-sudo cp "$SCRIPT_DIR/sensor.py" "$INSTALL_DIR/"
+cp "$SCRIPT_DIR/sensor.py" "$INSTALL_DIR/"
+# Create config file from template
+sed "s|{{INSTALL_DIR}}|$INSTALL_DIR|g" \
+    "$SCRIPT_DIR/config.ini.template" > "$INSTALL_DIR/config.ini"
 
 echo ""
 echo "Step 6: Setting up systemd service..."
 # Update service file with correct venv path
-sed "s|/usr/bin/python3|$INSTALL_DIR/venv/bin/python3|g" \
+sed -e "s|{{USER}}|$USER|g" \
+    -e "s|{{INSTALL_DIR}}|$INSTALL_DIR|g" \
     "$SCRIPT_DIR/systemd/temp-sensor.service" | \
     sudo tee /etc/systemd/system/temp-sensor.service > /dev/null
 

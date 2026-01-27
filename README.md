@@ -15,12 +15,12 @@ cd temp-sensor
 ./install.sh
 
 # Edit config for this location
-nano /home/pi/temp_sensor/config.ini
-# Change: lcoation = server_room_floor_1
+nano /home/temp-sensor/config.ini
+# Change: location = server_room_floor_1
 
 # Start service
 sudo systemctl enable temp-sensor
-sudo sysmtectl start temp-sensor
+sudo systemctl start temp-sensor
 
 # Verify
 curl http://localhost:9100/metrics
