@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e # Exit immediately if any failures
+set -euo pipefail # Exit immediately if any failures
 
 echo "====================================="
 echo "Temperature Monitor Installation"
