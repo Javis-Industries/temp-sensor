@@ -30,9 +30,26 @@ echo "Step 4: Installing Python packages..."
 echo ""
 echo "Step 5: Copying files..."
 cp "$SOURCE_DIR/sensor.py" "$INSTALL_DIR/"
-# Create config file from template
-sed "s|{{INSTALL_DIR}}|$INSTALL_DIR|g" \
-    "$SOURCE_DIR/config.ini.template" > "$INSTALL_DIR/config.ini"
+# Create or update config.ini
+if [ -f "$INSTALL_DIR/config.ini" ]; then
+    echo ""
+    echo "WARNING: config.ini already exists at $INSTALL_DIR/config.ini"
+    echo "Your existing configuration will be preserved."
+    echo ""
+    read -p "Do you want to overwrite it with default settings? (y/N): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo "Overwriting config.ini..."
+        sed "s|{{INSTALL_DIR}}|$INSTALL_DIR|g" \
+            "$SOURCE_DIR/config.ini.template" > "$INSTALL_DIR/config.ini"
+    else
+        echo "Keeping existing config.ini"
+    fi
+else
+    echo "Creating config.ini..."
+    sed "s|{{INSTALL_DIR}}|$INSTALL_DIR|g" \
+        "$SOURCE_DIR/config.ini.template" > "$INSTALL_DIR/config.ini"
+fi
 
 echo ""
 echo "Step 6: Setting up systemd service..."
