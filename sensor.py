@@ -60,7 +60,7 @@ hostname = socket.gethostname()
 
 # Setup logging
 logging.basicConfig(
-    level=logging.LOG_LEVEL,
+    level=LOG_LEVEL,
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S',
     handlers=[

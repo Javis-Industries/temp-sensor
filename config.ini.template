@@ -10,7 +10,7 @@ read_interval = 30
 
 [prometheus]
 # Port for exposing Prometheus metrics
-prometheus_port = 9100
+port = 9100
 
 [logging]
 # Log file location
