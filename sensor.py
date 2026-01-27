@@ -34,9 +34,9 @@ LOG_LEVEL = getattr(logging, config['logging']['log_level'])
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
 
 # Prometheus metrics
-temp_c = Gauge('temp_c', 'Temperate in Celcius', ['location', 'sensor_type', 'hostname'])
-temp_f = Gauge('temp_f', 'Temperature in Fahrenheiht', ['location', 'sensor_type', 'hostname'])
-humidity = Gauge('humidity_pct', 'Humidiity Percentage', ['location', 'sensor_type', 'hostname'])
+temp_c_gauge = Gauge('temp_c', 'Temperate in Celcius', ['location', 'sensor_type', 'hostname'])
+temp_f_gauge = Gauge('temp_f', 'Temperature in Fahrenheiht', ['location', 'sensor_type', 'hostname'])
+humidity_gauge = Gauge('humidity_pct', 'Humidiity Percentage', ['location', 'sensor_type', 'hostname'])
 sensor_info = Info('sensor', 'Sensor information')
 
 # Sensor health metrics
@@ -90,26 +90,28 @@ while True:
         # Validate temperature reading
         if temp_c is None:
             logging.warning("Received None value for temperature")
-        else:
-            temp_f = temp_c * (9 / 5) + 32
+            continue
+        
+        temp_f = temp_c * (9 / 5) + 32
 
         if humidity is None:
             logging.warning("Received None value for humidity")
+            continue
 
         # Update Prometheus metrics
-        temp_c.labels(
+        temp_c_gauge.labels(
             location=SENSOR_LOCATION, 
             sensor_type='DHT22',
             hostname=hostname
         ).set(round(temp_c, 1))
         
-        temp_f.labels(
+        temp_f_gauge.labels(
             location=SENSOR_LOCATION,
             sensor_type='DHT22',
             hostname=hostname
         ).set(round(temp_f, 1))
         
-        humidity.labels(
+        humidity_gauge.labels(
             location=SENSOR_LOCATION,
             sensor_type='DHT22',
             hostname=hostname
