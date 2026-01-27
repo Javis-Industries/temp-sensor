@@ -10,6 +10,7 @@ import sys
 import socket
 import configparser
 import os
+import signal
 
 # Load configuration
 config = configparser.ConfigParser()
@@ -88,6 +89,16 @@ except Exception as e:
 
 logging.info(f"Temperature monitoring started for {SENSOR_LOCATION}")
 
+# Ensure graceful shutdown of the program when it receives termination signals
+def shutdown_handler(signum, frame):
+      logging.info("Shutting down")
+      dht_device.exit()
+      sys.exit(0)
+
+# Register signal handlers for common termination signals
+signal.signal(signal.SIGTERM, shutdown_handler) # systemctl stop
+signal.signal(signal.SIGINT, shutdown_handler) # Ctrl-C
+
 # Main loop
 error_count = 0
 
@@ -151,7 +162,3 @@ while True:
         raise error
 
     time.sleep(READ_INTERVAL)
-
-# Cleanup
-logging.info("Shutting down")
-dht_device.exit()
