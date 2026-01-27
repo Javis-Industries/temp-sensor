@@ -146,10 +146,6 @@ while True:
         continue
     
     except Exception as error:
-        dht_device.exit()
-        raise error
-    
-    except Exception as error:
         logging.error(f"Critical error: {error}", exc_info=True)
         dht_device.exit()
         raise error
