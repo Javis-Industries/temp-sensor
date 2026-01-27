@@ -29,7 +29,11 @@ echo "Step 4: Installing Python packages..."
 
 echo ""
 echo "Step 5: Copying files..."
-cp "$SOURCE_DIR/sensor.py" "$INSTALL_DIR/"
+# Only copy if source and destination are different
+if [ "$SOURCE_DIR" != "$INSTALL_DIR" ]; then
+    cp "$SOURCE_DIR/sensor.py" "$INSTALL_DIR/"
+fi
+
 # Create or update config.ini
 if [ -f "$INSTALL_DIR/config.ini" ]; then
     echo ""
