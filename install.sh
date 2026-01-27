@@ -6,7 +6,7 @@ echo "Temperature Monitor Installation"
 echo "====================================="
 
 # Get the directory where the script is located
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+SOURCE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 INSTALL_DIR="$HOME/temp-sensor"
 
 echo ""
@@ -25,21 +25,21 @@ python3 -m venv "$INSTALL_DIR/venv"
 echo ""
 echo "Step 4: Installing Python packages..."
 "$INSTALL_DIR/venv/bin/pip" install --upgrade pip
-"$INSTALL_DIR/venv/bin/pip" install -r "$SCRIPT_DIR/requirements.txt"
+"$INSTALL_DIR/venv/bin/pip" install -r "$SOURCE_DIR/requirements.txt"
 
 echo ""
 echo "Step 5: Copying files..."
-cp "$SCRIPT_DIR/sensor.py" "$INSTALL_DIR/"
+cp "$SOURCE_DIR/sensor.py" "$INSTALL_DIR/"
 # Create config file from template
 sed "s|{{INSTALL_DIR}}|$INSTALL_DIR|g" \
-    "$SCRIPT_DIR/config.ini.template" > "$INSTALL_DIR/config.ini"
+    "$SOURCE_DIR/config.ini.template" > "$INSTALL_DIR/config.ini"
 
 echo ""
 echo "Step 6: Setting up systemd service..."
 # Update service file with correct venv path
 sed -e "s|{{USER}}|$USER|g" \
     -e "s|{{INSTALL_DIR}}|$INSTALL_DIR|g" \
-    "$SCRIPT_DIR/systemd/temp-sensor.service" | \
+    "$SOURCE_DIR/systemd/temp-sensor.service" | \
     sudo tee /etc/systemd/system/temp-sensor.service > /dev/null
 
 sudo systemctl daemon-reload
