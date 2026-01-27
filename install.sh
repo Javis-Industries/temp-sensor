@@ -24,7 +24,7 @@ python3 -m venv "$INSTALL_DIR/venv"
 echo ""
 echo "Step 3: Installing Python packages..."
 "$INSTALL_DIR/venv/bin/pip" install --upgrade pip
-"$INSTALL_DIR/venv/bin/pip" install -r "$SOURCE_DIR/requirements.txt"
+"$INSTALL_DIR/venv/bin/pip" install -r "$INSTALL_DIR/requirements.txt"
 
 echo ""
 echo "Step 4: Copying files..."
