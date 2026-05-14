@@ -1,5 +1,7 @@
 # DHT22 Temperature and Humidity Sensor
 
+[![Build](https://github.com/Javis-Industries/temp-sensor/actions/workflows/build.yml/badge.svg)](https://github.com/Javis-Industries/temp-sensor/actions/workflows/build.yml)
+
 Read temperature and humidity data from a DHT22 sensor connected to a Raspberry Pi or other Blinka-supported boards. See a list of supported boards [here](https://circuitpython.org/blinka).
 
 ## Deployment
